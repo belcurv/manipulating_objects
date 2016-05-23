@@ -11,7 +11,7 @@
     var app = angular.module('myApp', []);
     
     // =============================== SERVICES ===============================
-    app.factory('testFactory', ['$http', '$q', function ($http, $q) {
+    app.factory('stuffFactory', ['$http', '$q', function ($http, $q) {
 
         var url = 'data/data.csv',
             
@@ -27,6 +27,10 @@
                         }
                     });
                 });
+            },
+            
+            formatStuff = function (results) {
+                
             };
 
         return {
@@ -37,9 +41,9 @@
     
 
     // ============================= CONTROLLERS ==============================
-    app.controller('mainController', ['$scope', 'testFactory', function ($scope, testFactory) {
+    app.controller('mainController', ['$scope', 'stuffFactory', function ($scope, stuffFactory) {
         
-        testFactory.getStuff().then(function (results) {
+        stuffFactory.getStuff().then(function (results) {
             
             var rawData = [],
                 uniqueDates,
@@ -77,7 +81,8 @@
                 var i,
                     arr = [];
                 for (i = 0; i < this.length; i += 1) {
-                    if (!arr.contains(this[i][myQuery])) {
+                    if (arr.indexOf(this[i][myQuery]) === -1)  {   // using native .indexOf() method
+                    // if (!arr.contains(this[i][myQuery])) {   // using above .contains() method
                         arr.push(this[i][myQuery]);
                     }
                 }
